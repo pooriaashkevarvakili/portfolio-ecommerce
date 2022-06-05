@@ -24,7 +24,6 @@ let newTask = ref('')
 const store = useStore()
 const addTask = () => {
     if (newTask) {
-        newTask.value
         store.commit('ADD_TASK', newTask)
         newTask = ''
     }
