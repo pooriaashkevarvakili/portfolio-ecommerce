@@ -1,9 +1,11 @@
+s (61 sloc)  1.86 KB
+   
 <template>
     <div class=" bg-black w-full">
         <Navbar />
         <div class="flex justify-end">
             <i class="fa fa-shopping-cart -mt-10 text-white cursor-pointer">
-                {{ cartItemCount }}
+                {{ $store.state.cartItemCount }}
             </i>
         </div>
     </div>
@@ -26,8 +28,10 @@
                         <button @click="addTocart" class="bg-green-400 w-36 h-10   rounded-lg text-white">add</button>
 
                     </div>
+
                     <div class="col-span-1">
-                        <button @click="removeItem" class="bg-green-400 w-36 h-10 rounded-lg text-white">remove</button>
+                        <button @click="removeItem(items)"
+                            class="bg-green-400 w-36 h-10 rounded-lg text-white">remove</button>
 
                     </div>
                 </div>
@@ -37,30 +41,29 @@
     </div>
 </template>
 
-<script>
-import { mapActions, mapState } from 'vuex'
+<script setup>
+
+import { ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 import Navbar from './Navbar.vue'
-export default {
-    components: { Navbar },
-    data() {
-        return {
-            details: this.$route.params
-        }
-    },
-    computed: {
-        ...mapState({
-            cartItemCount: state => state.cartItemCount
-        })
-    },
-    methods: {
-        ...mapActions([
-            'addTocart', 'removeItem'
-        ]),
-        add() {
-            this.$router.push('/cart')
-        }
-    }
+let details = ref()
+const route = useRoute()
+details.value = route.params
+const router = useRouter()
+const store = useStore()
+
+const removeItem = () => {
+    store.commit('removeTask')
 }
+const addTocart = () => {
+    store.dispatch('addTocart')
+}
+const add = () => {
+    router.push('/cart')
+}
+
+
 </script>
 
 <style>
