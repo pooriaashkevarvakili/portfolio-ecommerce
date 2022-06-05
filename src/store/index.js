@@ -73,6 +73,9 @@ export default createStore({
         }
       }
     },
+    removeTask(state) {
+      state.cartItemCount--
+    },
     REMOVE_TASK(state, task) {
       state.tasks.splice(state.tasks.indexOf(task), 1)
     },
@@ -86,6 +89,9 @@ export default createStore({
     },
     removeItem(context, payload) {
       context.commit('removeItem', payload)
+    },
+    removeTask(context) {
+      context.commit('removeTask')
     }
   },
   modules: {
