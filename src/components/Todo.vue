@@ -15,33 +15,18 @@
         <Task v-for="(task, i) in $store.state.tasks" :key="i" :task="task"></Task>
     </div>
 </template>
-
-<script  >
+<script setup>
 import Task from "./Task.vue"
 import Navbar from './Navbar.vue'
-import { mapMutations } from 'vuex'
-export default {
-
-    components: {
-        Navbar, Task
-    },
-    data() {
-        return {
-            newTask: ''
-        }
-    },
-    methods: {
-        ...mapMutations([
-            'ADD_TASK'
-        ]),
-        addTask() {
-
-            if (this.newTask) {
-
-                this.ADD_TASK(this.newTask)
-                this.newTask = ''
-            }
-        }
+import { useStore } from "vuex"
+import { ref } from "vue"
+let newTask = ref('')
+const store = useStore()
+const addTask = () => {
+    if (newTask) {
+        newTask.value
+        store.commit('ADD_TASK', newTask)
+        newTask = ''
     }
 }
 </script>
