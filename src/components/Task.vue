@@ -6,20 +6,17 @@
         </div>
     </div>
 </template>
-
-<script >
-import { mapMutations } from 'vuex'
+<script>
+import { useStore } from 'vuex'
 export default {
     props: ['task'],
-    methods: {
-        ...mapMutations([
-            'REMOVE_TASK'
-        ]),
-
+    setup() {
+        const store = useStore()
+        const REMOVE_TASK = () => { store.commit('REMOVE_TASK') }
+        return { REMOVE_TASK }
     }
+
 }
-
 </script>
-
 <style>
 </style>
